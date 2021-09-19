@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
+    'gabaritos.apps.GabaritosConfig',
     'widget_tweaks',
 ]
 

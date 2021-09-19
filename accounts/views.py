@@ -19,5 +19,5 @@ def criar_conta_view(request):
 
             if usuario is not None:
                 login(request, usuario)
-                return redirect('login')
+                return redirect('pagina_inicial')
     return render(request, 'registration/criar_conta.html', {'form' : form})
