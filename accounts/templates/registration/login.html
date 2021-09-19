@@ -13,7 +13,7 @@
                 {%include 'form_render.html' %}
 
                 <p class="form-text"><a href="#">Esqueceu a senha?</a></p>
-                <p class="form-text">Não possui uma conta? <a href="#">Crie uma agora!</a></p>
+                <p class="form-text">Não possui uma conta? <a href="{% url 'register' %}">Crie uma agora!</a></p>
 
                 <button class="btn btn-primary w-100" type="submit">Entrar</button>
             </form>
