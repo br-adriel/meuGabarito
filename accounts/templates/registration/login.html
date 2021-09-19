@@ -1,3 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}Entrar{% endblock %}
+
+{% block content %}
+<div class="col col-md-6 col-lg-4 py-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title text-center">Entrar</h3>
+            <form method="post">
+                {% csrf_token %}
+
+                {%include 'form_render.html' %}
+
+                <p class="form-text"><a href="#">Esqueceu a senha?</a></p>
+                <p class="form-text">Não possui uma conta? <a href="#">Crie uma agora!</a></p>
+
+                <button class="btn btn-primary w-100" type="submit">Entrar</button>
+            </form>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
