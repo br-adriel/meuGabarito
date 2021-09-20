@@ -15,12 +15,30 @@
                 {% include 'form_render.html' %}
 
                 <p class="form-text"><a href="{% url 'password_change' %}">Alterar senha</a></p>
-                <p class="form-text"><a href="#">Exluir conta</a></p>
+                <p class="form-text"><a href="#" data-bs-toggle="modal" data-bs-target="#excluirContaModal">Exluir conta</a></p>
 
                 <button class="btn btn-primary w-100" type="submit">Salvar</button>
             </form>
             
         </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="excluirContaModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir conta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>Tem certeza que deseja excluir sua conta? Todos os dados e gabaritos serão apagados e não poderão ser recupearados.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <a href="{% url 'excluir_conta' %}" class="btn btn-danger">Excluir conta</a>
+            </div>
+          </div>
     </div>
 </div>
 {% endblock %}

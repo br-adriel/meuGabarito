@@ -1,11 +1,10 @@
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 
 from .forms import EditarPerfilForm
-
 
 def criar_conta_view(request):
     form = UserCreationForm()
@@ -39,3 +38,14 @@ def editar_perfil_view(request):
 
             messages.success(request, 'Perfil atualizado.')
     return render(request, 'registration/editar_perfil.html', {'form' : form})
+
+
+@login_required
+def excluir_conta_view(request):
+    usuario = request.user
+    
+    logout(request)
+    usuario.delete()
+
+    messages.success(request, 'Sua conta foi apagada.')
+    return redirect('pagina_inicial')
