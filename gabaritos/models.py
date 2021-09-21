@@ -15,6 +15,9 @@ class Gabarito(models.Model):
     nome = models.CharField(max_length=60)
     tamanho = models.PositiveIntegerField()
     indice = models.PositiveIntegerField(verbose_name='índice')
+    feitas = models.PositiveIntegerField(default=0)
+    acertadas = models.PositiveIntegerField(default=0)
+    corrigidas = models.PositiveIntegerField(default=0)
     criado_em = models.DateTimeField(auto_now_add=True)
     dono = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -33,7 +36,7 @@ class Questao(models.Model):
     gabarito = models.ForeignKey(Gabarito, on_delete=models.CASCADE)
 
     def __str__(self):
-        return '' + self.gabarito + ' | Questão ' + str(self.numero)
+        return '' + self.gabarito.nome + ' | Questão ' + str(self.numero)
 
     
     class Meta:

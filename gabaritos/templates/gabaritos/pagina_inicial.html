@@ -3,5 +3,76 @@
 {% block title %}Página inicial{% endblock %}
 
 {% block content %}
-<h1>Olá {{ user.username }}</h1>
+<div class="col py-3">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between">
+                <h4 class="d-inline py-1 m-0">Olá, {{ user.username }}</h4>
+                <button class="btn btn-primary" title="Novo gabarito" data-bs-toggle="modal" data-bs-target="#criarGabaritoModal">
+                    <i class="bi bi-plus-lg d-md-none"></i>
+                    <span class="d-none d-md-inline">Novo gabarito</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col py-3">
+            {% include 'messages.html' %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-2">
+                {% for gabarito in page_obj %}
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title text-center">{{ gabarito.nome }}</h4>
+                            <h6 class="card-subltitle text-center form-text">Criado em {{ gabarito.criado_em|date:'d/m/Y' }}</h6>
+                            <p class="my-3">
+                                <span class="fs-3 fw-bold">{{ gabarito.feitas }}</span>/{{ gabarito.tamanho }} feitas <br>
+                                <span class="fs-3 fw-bold">{{ gabarito.corrigidas }}</span>/{{ gabarito.feitas }} corrigidas<br>
+                                <span class="fs-3 fw-bold">{{ gabarito.acertadas }}</span> acertos
+                            </p>
+                            <div class="btn-group w-100">
+                                    <a href="" class="btn btn-outline-primary">
+                                        <i class="bi bi-pencil"></i> 
+                                        <span class="d-lg-none d-xl-inline">Acessar</span>
+                                    </a>
+                                    <a href="" class="btn btn-outline-primary">
+                                        <i class="bi bi-check2-square"></i> 
+                                        <span class="d-lg-none d-xl-inline">Corrigir</span>
+                                    </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col py-3">
+            {% include 'paginator.html' %}
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="criarGabaritoModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Criar gabarito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+
+                    {% include 'form_render.html' %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-criar-gabarito">Criar gabarito</butotn>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
