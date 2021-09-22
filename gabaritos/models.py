@@ -33,6 +33,7 @@ class Questao(models.Model):
     numero = models.PositiveIntegerField(verbose_name='número')
     alternativa = models.CharField(max_length=1, choices=ALTERNATIVA_CHOICES, null=True, blank=True)
     corrigida = models.BooleanField(default=False)
+    acertada = models.BooleanField(blank=True, null=True)
     gabarito = models.ForeignKey(Gabarito, on_delete=models.CASCADE)
 
     def __str__(self):
