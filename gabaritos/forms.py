@@ -10,3 +10,12 @@ class CriarGabaritoForm(forms.ModelForm):
             'tamanho' : 'Número de questões do seu gabarito.',
             'indice' : 'O número da primeira questão.',
         }
+
+
+class RenomearGabaritoForm(forms.ModelForm):
+    class Meta:
+        model = Gabarito
+        fields = ('nome',)
+        labels = {
+            'nome' : 'Novo nome',
+        }

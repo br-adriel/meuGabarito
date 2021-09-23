@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
-from .forms import CriarGabaritoForm
+from .forms import CriarGabaritoForm, RenomearGabaritoForm
 from .models import Gabarito, Questao
 
 MESSAGES_TAGS = {
@@ -28,7 +29,7 @@ def pagina_inicial_view(request):
 
             #criacao das questoes do gabarito
             for i in range(0, gabarito_criado.tamanho):
-                Questao.objects.create(numero=i, gabarito=gabarito_criado)
+                Questao.objects.create(numero=gabarito_criado.indice+i, gabarito=gabarito_criado)
 
             return redirect('pagina_inicial')
         else:
@@ -47,3 +48,77 @@ def pagina_inicial_view(request):
         'page_obj': page_obj,
     }
     return render(request, 'gabaritos/pagina_inicial.html', contexto)
+
+
+@login_required
+def ver_gabarito_view(request, id):
+    gabarito = get_object_or_404(Gabarito, id=id)
+
+    if gabarito is not None and gabarito.dono == request.user:
+        # renomear gabarito
+        form = RenomearGabaritoForm()
+        if request.method == 'POST':
+            form = RenomearGabaritoForm(request.POST)
+            if form.is_valid():
+                nome_antigo = gabarito.nome
+                nome_novo= form.cleaned_data.get('nome')
+                gabarito.nome = nome_novo
+                gabarito.save()
+                
+                msg = 'Gabarito renomeado de "' + nome_antigo + '" para "' + nome_novo + '".'
+                messages.success(request, msg)
+            return redirect('ver_gabarito', id)
+
+        # listagem de gabarito/questões
+        paginator = Paginator(gabarito.questao_set.all(), 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        contexto = {
+            'form' : form,
+            'gabarito' : gabarito,
+            'page_obj' : page_obj,
+        }
+        
+        return render(request, 'gabaritos/gabarito.html', contexto)
+
+    messages.error(request, 'O gabarito não existe.')
+    return redirect('pagina_inicial')
+
+
+@login_required
+def excluir_gabarito_view(request, id):
+    gabarito = get_object_or_404(Gabarito, id=id)
+
+    if gabarito is not None and gabarito.dono == request.user:
+        gabarito.delete()
+        messages.success(request, 'Gabarito excluído com sucesso.')
+        return redirect('pagina_inicial')
+
+    messages.error(request, 'O gabarito não existe.')
+    return redirect('pagina_inicial')
+
+
+@login_required
+def marcar_questao_view(request, pagina, id, alternativa):
+    questao = get_object_or_404(Questao, id=id)
+
+    if questao.gabarito.dono == request.user and not questao.corrigida:
+        # verifica se foi passada uma alternativa válida
+        if alternativa in ['A', 'B', 'C', 'D', 'E']:
+            # adiciona a contagem de questões feitas
+            if questao.alternativa == None: # verifica se já havia sido marcada para não contar repetido
+                gabarito = Gabarito.objects.get(id=questao.gabarito.id)
+                gabarito.feitas += 1
+                gabarito.save()
+
+            # marca a alternativa no banco de dados
+            questao.alternativa = alternativa
+            questao.save()
+
+    # gera a url com a paginação da questao que está sendo alterada
+    url_base = reverse(ver_gabarito_view, args=(questao.gabarito.id,))
+
+    parametros = 'page=' + pagina
+    url = '{}?{}'.format(url_base, parametros)
+    return redirect(url)

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ gabarito.nome }}{% endblock %}
+
+{% block content %}
+<div class="col py-3">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between">
+                <h4 class="d-inline py-1 m-0">{{ gabarito.nome }}</h4>
+                <div>
+                    <button class="btn btn-primary" title="Renomear" data-bs-toggle="modal" data-bs-target="#renomearGabaritoModal">
+                        <i class="bi bi-pencil-square d-md-none"></i>
+                        <span class="d-none d-md-inline">Renomear</span>
+                    </button>
+                    <a class="btn btn-primary" title="Corrigir">
+                        <i class="bi bi-check2-square d-md-none"></i>
+                        <span class="d-none d-md-inline">Corrigir</span>
+                    </a>
+                    <button class="btn btn-danger" title="Excluir" data-bs-toggle="modal" data-bs-target="#excluirGabaritoModal">
+                        <i class="bi bi-trash d-md-none"></i>
+                        <span class="d-none d-md-inline">Excluir</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col col-md-8 col-lg-5 py-3">
+            {% include 'messages.html' %}
+
+            <div class="card py-3">
+                {% for questao in page_obj %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">Questão {{ questao.numero }}</h5>
+                    {% include 'gabaritos/render_alternativas.html' %}
+                </div>
+                <hr>
+                {% endfor %}
+                <h5 class="text-center form-text">
+                    Criado em {{ gabarito.criado_em }}
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col py-3">
+            {% include 'paginator.html' %}
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal de renomear gabarito -->
+<div class="modal" tabindex="-1" id="renomearGabaritoModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Renomear gabarito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post">
+                <div class="modal-body">
+                    {% csrf_token %}
+
+                    {% include 'form_render.html' %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-criar-gabarito">Renomear</butotn>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal de exclusão de gabarito -->
+<div class="modal" tabindex="-1" id="excluirGabaritoModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Excluir gabarito</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="card-text">Tem certeza que deseja excluir o gabarito "{{ gabarito.nome }}" e todas as suas questões? Essa ação não pode ser desfeita.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger" href="{% url 'excluir_gabarito' gabarito.id %}">Excluir gabarito</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
