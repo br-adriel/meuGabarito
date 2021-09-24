@@ -122,3 +122,54 @@ def marcar_questao_view(request, pagina, id, alternativa):
     parametros = 'page=' + pagina
     url = '{}?{}'.format(url_base, parametros)
     return redirect(url)
+
+
+@login_required
+def corrigir_gabarito_view(request, id):
+    gabarito = get_object_or_404(Gabarito, id=id)
+
+    if gabarito is not None and gabarito.dono == request.user:
+        paginator = Paginator(gabarito.questao_set.all(), 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        contexto = {
+            'gabarito': gabarito,
+            'page_obj' : page_obj,
+        }
+
+        return render(request, 'gabaritos/corrigir_gabarito.html', contexto)
+
+    messages.error(request, 'Gabarito não encontrado')
+    return redirect('pagina_inicial')
+
+
+@login_required
+def corrigir_questao_view(request, pagina, id, correta):
+    questao = get_object_or_404(Questao, id=id)
+
+    if questao.gabarito.dono == request.user and not questao.corrigida:
+        # adiciona a contagem de questões corrigidas
+        if questao.corrigida == False: # verifica se já havia sido corrigida para não contar repetido
+            if correta in [0, 1]:
+                gabarito = Gabarito.objects.get(id=questao.gabarito.id)
+                gabarito.corrigidas += 1
+
+                if correta == 1:
+                    questao.acertada = True
+                    gabarito.acertadas +=1
+                else:
+                    questao.acertada = False
+
+                questao.corrigida = True
+                questao.save()
+                gabarito.save()
+            else:
+                messages.error(request, 'Erro na correção.')
+
+    # gera a url com a paginação da questao que está sendo alterada
+    url_base = reverse(corrigir_gabarito_view, args=(questao.gabarito.id,))
+
+    parametros = 'page=' + pagina
+    url = '{}?{}'.format(url_base, parametros)
+    return redirect(url)

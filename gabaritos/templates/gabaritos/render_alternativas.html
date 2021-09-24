@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-center py-2">
     {% if questao.corrigida %}
         {% if questao.acertada %}
-        <div class="alert alert-success w-100 m-0">
+        <div class="col bg-success text-white rounded mx-2 py-1">
         {% else %}
-        <div class="alert alert-danger w-100 m-0">
+        <div class="col bg-danger text-white rounded mx-2 py-1">
         {% endif %}
-            {{ questao.alternativa }}
+            <span class="fs-4">{{ questao.alternativa }}</span>
         </div>
     {% else %}
         <div class="btn-group" role="group">

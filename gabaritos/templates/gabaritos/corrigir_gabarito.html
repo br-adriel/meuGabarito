@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Corrigindo "{{ gabarito.nome }}"{% endblock %}
+
+{% block content %}
+<div class="col py-3">
+    <div class="row">
+        <div class="col">
+            <div class="d-flex justify-content-between">
+                <h4 class="d-inline py-1 m-0">Corrigindo "{{ gabarito.nome }}"</h4>
+                <div>
+                    <a class="btn btn-primary" title="Responder" href="{% url 'ver_gabarito' gabarito.id %}">
+                        <i class="bi bi-pencil d-md-none"></i>
+                        <span class="d-none d-md-inline">Responder</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col col-md-8 col-lg-5 py-3">
+            {% include 'messages.html' %}
+
+            <div class="card py-3">
+                {% for questao in page_obj %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">Questão {{ questao.numero }}</h5>
+                    {% include 'gabaritos/render_correcao_alternativas.html' %}
+                </div>
+                <hr>
+                {% endfor %}
+                <h5 class="text-center form-text">
+                    Criado em {{ gabarito.criado_em }}
+                </h5>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col py-3">
+            {% include 'paginator.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}

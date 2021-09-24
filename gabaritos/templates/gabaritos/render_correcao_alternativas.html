@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-center py-2 col-11 mx-auto">
+    {% if questao.alternativa %}
+        {% if questao.corrigida %}
+            {% if questao.acertada %}
+            <div class="col bg-success text-white rounded mx-2 py-1">
+            {% else %}
+            <div class="col bg-danger text-white rounded mx-2 py-1">
+            {% endif %}
+                <span class="fs-4">{{ questao.alternativa }}</span>
+            </div>
+        {% else %}
+        <div class="col bg-light rounded mx-2 py-1">
+            <span class="fs-4">{{ questao.alternativa }}</span>
+        </div>
+        <div class="ms-auto py-1">
+            <a href="{% url 'corrigir_questao' id=questao.id pagina=page_obj.number correta=0 %}" class="btn btn-danger" title="Errado"><i class="bi bi-x-lg"></i></a>
+            <a href="{% url 'corrigir_questao' id=questao.id pagina=page_obj.number correta=1 %}" class="btn btn-success" title="Certo"><i class="bi bi-check-lg"></i></a>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-info text-center">
+            <span>Essa questão não foi marcada ainda.</span>
+        </div>
+    {% endif %}
+</div>
