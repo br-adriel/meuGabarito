@@ -10,5 +10,5 @@ urlpatterns = [
     path('gabarito/<int:id>/corrigir', corrigir_gabarito_view, name='corrigir_gabarito'),
     path('gabarito/<int:id>/excluir', excluir_gabarito_view, name='excluir_gabarito'),
     path('gabarito/marcar/<int:id>/<str:alternativa>', marcar_questao_view, name='marcar_questao'),
-    path('gabarito/<str:pagina>/corrigir/<int:id>/<int:correta>', corrigir_questao_view, name='corrigir_questao'),
+    path('gabarito/corrigir/<int:id>/<int:correta>', corrigir_questao_view, name='corrigir_questao'),
 ]

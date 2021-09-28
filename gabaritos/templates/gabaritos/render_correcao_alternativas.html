@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center py-2 col-11 mx-auto">
+<div class="d-flex justify-content-center py-2 col-11 mx-auto" id="questao-{{ questao.id }}">
     {% if questao.alternativa %}
         {% if questao.corrigida %}
             {% if questao.acertada %}
@@ -13,8 +13,8 @@
             <span class="fs-4">{{ questao.alternativa }}</span>
         </div>
         <div class="ms-auto py-1">
-            <a href="{% url 'corrigir_questao' id=questao.id pagina=page_obj.number correta=0 %}" class="btn btn-danger" title="Errado"><i class="bi bi-x-lg"></i></a>
-            <a href="{% url 'corrigir_questao' id=questao.id pagina=page_obj.number correta=1 %}" class="btn btn-success" title="Certo"><i class="bi bi-check-lg"></i></a>
+            <button class="btn btn-danger correcao c-0" title="Errado"><i class="bi bi-x-lg"></i></button>
+            <button class="btn btn-success correcao c-1" title="Certo"><i class="bi bi-check-lg"></i></button>
         </div>
         {% endif %}
     {% else %}

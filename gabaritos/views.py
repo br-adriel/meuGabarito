@@ -143,7 +143,7 @@ def corrigir_gabarito_view(request, id):
 
 
 @login_required
-def corrigir_questao_view(request, pagina, id, correta):
+def corrigir_questao_view(request, id, correta):
     questao = get_object_or_404(Questao, id=id)
 
     if questao.gabarito.dono == request.user and not questao.corrigida:
@@ -164,10 +164,5 @@ def corrigir_questao_view(request, pagina, id, correta):
                 gabarito.save()
             else:
                 messages.error(request, 'Erro na correção.')
-
-    # gera a url com a paginação da questao que está sendo alterada
-    url_base = reverse(corrigir_gabarito_view, args=(questao.gabarito.id,))
-
-    parametros = 'page=' + pagina
-    url = '{}?{}'.format(url_base, parametros)
-    return redirect(url)
+    html = render_to_string('gabaritos/render_correcao_alternativas.html', {'questao':questao}, request)
+    return JsonResponse({'html': html})
