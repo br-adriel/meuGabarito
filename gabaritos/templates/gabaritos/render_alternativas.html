@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center py-2">
+<div class="d-flex justify-content-center py-2" id="questao-{{ questao.id }}">
     {% if questao.corrigida %}
         {% if questao.acertada %}
         <div class="col bg-success text-white rounded mx-2 py-1">
@@ -10,41 +10,41 @@
     {% else %}
         <div class="btn-group" role="group">
             {% if questao.alternativa is None %}
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='A' pagina=page_obj.number %}" class="btn btn-outline-primary">A</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='B' pagina=page_obj.number %}" class="btn btn-outline-primary">B</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='C' pagina=page_obj.number %}" class="btn btn-outline-primary">C</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='D' pagina=page_obj.number %}" class="btn btn-outline-primary">D</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='E' pagina=page_obj.number %}" class="btn btn-outline-primary">E</a>
+                <button class="btn btn-outline-primary alternativa alt-A">A</a>
+                <button class="btn btn-outline-primary alternativa alt-B">B</a>
+                <button class="btn btn-outline-primary alternativa alt-C">C</a>
+                <button class="btn btn-outline-primary alternativa alt-D">D</a>
+                <button class="btn btn-outline-primary alternativa alt-E">E</a>
             {% elif questao.alternativa == 'A' %}
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='A' pagina=page_obj.number %}" class="btn btn-primary">A</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='B' pagina=page_obj.number %}" class="btn btn-outline-primary">B</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='C' pagina=page_obj.number %}" class="btn btn-outline-primary">C</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='D' pagina=page_obj.number %}" class="btn btn-outline-primary">D</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='E' pagina=page_obj.number %}" class="btn btn-outline-primary">E</a>
+                <button class="btn btn-primary alternativa alt-A">A</a>
+                <button class="btn btn-outline-primary alternativa alt-B">B</a>
+                <button class="btn btn-outline-primary alternativa alt-C">C</a>
+                <button class="btn btn-outline-primary alternativa alt-D">D</a>
+                <button class="btn btn-outline-primary alternativa alt-E">E</a>
             {% elif questao.alternativa == 'B' %}
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='A' pagina=page_obj.number %}" class="btn btn-outline-primary">A</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='B' pagina=page_obj.number %}" class="btn btn-primary">B</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='C' pagina=page_obj.number %}" class="btn btn-outline-primary">C</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='D' pagina=page_obj.number %}" class="btn btn-outline-primary">D</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='E' pagina=page_obj.number %}" class="btn btn-outline-primary">E</a>
+                <button class="btn btn-outline-primary alternativa alt-A">A</a>
+                <button class="btn btn-primary alternativa alt-B">B</a>
+                <button class="btn btn-outline-primary alternativa alt-C">C</a>
+                <button class="btn btn-outline-primary alternativa alt-D">D</a>
+                <button class="btn btn-outline-primary alternativa alt-E">E</a>
             {% elif questao.alternativa == 'C' %}
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='A' pagina=page_obj.number %}" class="btn btn-outline-primary">A</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='B' pagina=page_obj.number %}" class="btn btn-outline-primary">B</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='C' pagina=page_obj.number %}" class="btn btn-primary">C</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='D' pagina=page_obj.number %}" class="btn btn-outline-primary">D</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='E' pagina=page_obj.number %}" class="btn btn-outline-primary">E</a>
+                <button class="btn btn-outline-primary alternativa alt-A">A</a>
+                <button class="btn btn-outline-primary alternativa alt-B">B</a>
+                <button class="btn btn-primary alternativa alt-C">C</a>
+                <button class="btn btn-outline-primary alternativa alt-D">D</a>
+                <button class="btn btn-outline-primary alternativa alt-E">E</a>
             {% elif questao.alternativa == 'D' %}
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='A' pagina=page_obj.number %}" class="btn btn-outline-primary">A</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='B' pagina=page_obj.number %}" class="btn btn-outline-primary">B</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='C' pagina=page_obj.number %}" class="btn btn-outline-primary">C</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='D' pagina=page_obj.number %}" class="btn btn-primary">D</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='E' pagina=page_obj.number %}" class="btn btn-outline-primary">E</a>
+                <button class="btn btn-outline-primary alternativa alt-A">A</a>
+                <button class="btn btn-outline-primary alternativa alt-B">B</a>
+                <button class="btn btn-outline-primary alternativa alt-C">C</a>
+                <button class="btn btn-primary alternativa alt-D">D</a>
+                <button class="btn btn-outline-primary alternativa alt-E">E</a>
             {% elif questao.alternativa == 'E' %}
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='A' pagina=page_obj.number %}" class="btn btn-outline-primary">A</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='B' pagina=page_obj.number %}" class="btn btn-outline-primary">B</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='C' pagina=page_obj.number %}" class="btn btn-outline-primary">C</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='D' pagina=page_obj.number %}" class="btn btn-outline-primary">D</a>
-                <a href="{% url 'marcar_questao' id=questao.id alternativa='E' pagina=page_obj.number %}" class="btn btn-primary">E</a>
+                <button class="btn btn-outline-primary alternativa alt-A">A</button>
+                <button class="btn btn-outline-primary alternativa alt-B">B</button>
+                <button class="btn btn-outline-primary alternativa alt-C">C</button>
+                <button class="btn btn-outline-primary alternativa alt-D">D</button>
+                <button class="btn btn-primary alternativa alt-E">E</button>
             {% endif %}
         </div>
     {% endif %}

@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 
 from .forms import CriarGabaritoForm, RenomearGabaritoForm
@@ -100,7 +102,7 @@ def excluir_gabarito_view(request, id):
 
 
 @login_required
-def marcar_questao_view(request, pagina, id, alternativa):
+def marcar_questao_view(request, id, alternativa):
     questao = get_object_or_404(Questao, id=id)
 
     if questao.gabarito.dono == request.user and not questao.corrigida:
@@ -116,12 +118,8 @@ def marcar_questao_view(request, pagina, id, alternativa):
             questao.alternativa = alternativa
             questao.save()
 
-    # gera a url com a paginação da questao que está sendo alterada
-    url_base = reverse(ver_gabarito_view, args=(questao.gabarito.id,))
-
-    parametros = 'page=' + pagina
-    url = '{}?{}'.format(url_base, parametros)
-    return redirect(url)
+    html = render_to_string('gabaritos/render_alternativas.html', {'questao': questao}, request)
+    return JsonResponse({'html' : html})
 
 
 @login_required

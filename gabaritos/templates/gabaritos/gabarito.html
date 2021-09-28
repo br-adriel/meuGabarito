@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{ gabarito.nome }}{% endblock %}
 
@@ -33,7 +34,9 @@
                 {% for questao in page_obj %}
                 <div class="card-body text-center">
                     <h5 class="card-title">Questão {{ questao.numero }}</h5>
-                    {% include 'gabaritos/render_alternativas.html' %}
+                    <div>
+                        {% include 'gabaritos/render_alternativas.html' %}
+                    </div>
                 </div>
                 <hr>
                 {% endfor %}
@@ -93,4 +96,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'gabaritos/js/gabarito.js' %}"></script>
 {% endblock %}
