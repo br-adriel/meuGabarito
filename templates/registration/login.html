@@ -3,6 +3,18 @@
 {% block title %}Entrar{% endblock %}
 
 {% block content %}
+{% if user.is_authenticated %}
+<div class="col col-md-6 col-lg-4 py-3">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title text-center">Você já está logado</h3>
+            <div class="text-center mt-3">
+                <a href="{% url 'pagina_inicial' %}" class="btn btn-primary">Ir para a página inicial</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
 <div class="col col-md-6 col-lg-4 py-3">
     <div class="card shadow-sm">
         <div class="card-body">
@@ -23,4 +35,5 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endblock %}
