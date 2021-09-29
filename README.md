@@ -16,6 +16,7 @@ Para o backend do site eu usei o **Django** com o banco de dados **SQLite3** que
 As telas foram feitas com os componentes do **Bootstrap**, deixei tudo bem simples, não fiz nenhuma modificação;
 
 O **Django widget tweaks** foi usado na renderização dos formulários nos templates do django;
+
 e o **JQuery** foi usado para implmentação de requisições assíncronas nas partes de marcar alternativa e corrigir gabarito
 para que a página não precisasse regarregar a cada clique do usuário e ele tivesse que sempre rolar a página para a questão
 em que estava modificando.
